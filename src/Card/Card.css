@@ -1,0 +1,18 @@
+.cardElement {
+    margin: 1em;
+}
+
+.imageInfo {
+    color: red;
+    display: inline-block;
+    margin-left: 0.5em;
+}
+
+.personName {
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.personImage {
+    width: 5em;
+}

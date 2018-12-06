@@ -12,3 +12,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.fa-star {
+  margin: 0.5em;
+  font-size: 24px;
+}
+
+span {
+  display: inline-block;
+  margin: 0.5em;
+  text-align: center;
+  background-color: #ccc;
+  width: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+span.selected {
+  background-color: #eee;
+  color: #bbb;
+  cursor: not-allowed;
+}
+
+span.used {
+  background-color: #aaddaa;
+  color: #889988;
+  cursor: not-allowed;
+}
+
+
