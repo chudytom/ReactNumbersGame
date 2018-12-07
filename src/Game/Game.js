@@ -4,13 +4,16 @@ import Button from '../Button/Button'
 import Answer from '../Answer/Answer'
 import Numbers from '../Numbers/Numbers';
 import _ from 'lodash'
+import { DoneFrame } from '../DoneFrame/DoneFrame';
 
 export default class Game extends Component {
     state = {
         selectedNumbers: [],
         usedNumbers: [],
         starsCount: 0,
-        isAnswerCorrect: null
+        isAnswerCorrect: null,
+        redraws: 5,
+        doneStatus: null
     }
 
     constructor() {
@@ -51,6 +54,28 @@ export default class Game extends Component {
         }))
     }
 
+    updateDoneStatus = () => {
+        this.setState(prevState => {
+            if (prevState.usedNumbers.length === Numbers.count) {
+                return { downStatus: 'You win!' };
+            }
+            if (prevState.redraws === 0 && !this.possibleSolutions(prevState)) {
+                return { downStatus: 'Gave over!' };
+            }
+        })
+    }
+
+    // possibleSolutions = (prevState) => {
+    //     const possibleNumbers = _.range(Numbers.firstNumber, Numbers.firstNumber + Numbers.count)
+    //         .filter(number => !prevState.usedNumbers.include(number))
+        
+    //     const possibleSums = 
+    // }
+
+    // getAllPossibleSums = (numbersList) => {
+
+    // }
+
     acceptAnswer = () => {
         console.log('Accept answer called');
         this.setState(prevState => ({
@@ -62,10 +87,12 @@ export default class Game extends Component {
     }
 
     redraw = () => {
+        if (this.state.redraws <= 0) { return; }
         this.setState(prevState => ({
             selectedNumbers: [],
             isAnswerCorrect: null,
-            starsCount: this.getRandomizedStarsCount()
+            starsCount: this.getRandomizedStarsCount(),
+            redraws: prevState.redraws - 1
         }))
     }
 
@@ -80,12 +107,15 @@ export default class Game extends Component {
                     <Stars starsCount={this.state.starsCount} />
                     <Button selectedNumbers={this.state.selectedNumbers} checkAnswer={this.checkAnswer}
                         acceptAnswer={this.acceptAnswer} isAnswerCorrect={this.state.isAnswerCorrect}
-                        redraw={this.redraw} />
+                        redraw={this.redraw} redraws={this.state.redraws} />
                     <Answer selectedNumbers={this.state.selectedNumbers} deselectNumber={this.deselectNumber} />
                 </div>
                 <br />
-                <Numbers selectedNumbers={this.state.selectedNumbers} selectNumber={this.selectNumber}
-                    usedNumbers={this.state.usedNumbers} />
+                {this.state.doneStatus ?
+                    <DoneFrame doneStatus={this.state.doneStatus} /> :
+                    <Numbers selectedNumbers={this.state.selectedNumbers} selectNumber={this.selectNumber}
+                        usedNumbers={this.state.usedNumbers} />
+                }
             </div>
         )
     }

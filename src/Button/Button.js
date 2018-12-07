@@ -25,8 +25,8 @@ const Button = (props) => {
             {button}
             <br />
             <br />
-            <button className='btn btn-warning btn-sm' onClick={props.redraw}>
-                <FontAwesomeIcon icon='circle' />
+            <button className='btn btn-warning btn-sm' onClick={props.redraw} disabled={props.redraws <= 0}>
+                <FontAwesomeIcon icon='circle' /> {props.redraws}
             </button>
         </div>
     )
